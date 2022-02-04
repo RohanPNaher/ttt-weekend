@@ -5,6 +5,33 @@ const cells = [
   3, 4, 5,
   6, 7, 8
 ]
+const players = [
+  {
+    value : 1,
+    name: 'X'
+  },
+  {
+    value: -1,
+    name: 'O'
+  },
+  {
+    value: 'T',
+    name: 'Tie'
+  }
+]
+
+const winningCombo = {
+  'win1' : [sq0, sq1, sq2],
+  'win2' : [sq3, sq4, sq5],
+  'win3' : [sq6, sq7, sq8],
+  'win4' : [sq0, sq3, sq6],
+  'win5' : [sq1, sq4, sq7],
+  'win6' : [sq2, sq5, sq8],
+  'win7' : [sq0, sq4, sq8],
+  'win8' : [sq2, sq4, sq6]
+}
+console.log(winningCombo)
+
 const playerX = 1
 const playerO = -1
 const tie = "T"
@@ -12,7 +39,7 @@ const tie = "T"
 
 /*---------------------------- Variables (state) ----------------------------*/
 
-let isWinner, startGame, startingPlayer, playerTurn, totalTurns
+let isWinner, startGame, startingPlayer, playerTurn
 
 
 /*------------------------ Cached Element References ------------------------*/
@@ -21,17 +48,18 @@ const board = document.querySelector('.board')
 const messageElement = document.getElementById('message')
 const playArea = document.querySelectorAll('.play-area')
 
-
 /*----------------------------- Event Listeners -----------------------------*/
-
+playArea.forEach(square => square.addEventListener('click', handleClick))
 
 
 /*-------------------------------- Functions --------------------------------*/
 
 function init() {
   //Clear the cells
+  let selectedCell = []
   for(let i = 0; i < playArea.length; i++) {
     // console.log(playArea[i])
+    selectedCell.push(null)
     playArea[i].innerHTML = ""
   }
   //Resets the game to starting player
@@ -49,31 +77,38 @@ function init() {
 
 function render() {
   // iterate 
-  let selectedCell
-  for(let i = 0; i < playArea.length; i++) {
-    selectedCell = cells[i]
-    renderPlayer(selectedCell)
-  }
+  	// ** 3.3.1) LOOP over board array, for each iteration:
+		// ** 3.3.1.1) index of the iteration to access the square in the squares array that corresponds with the current cell being iterated over in the board array
+		// ** 3.3.1.2) Style square dependant on the value inside current cell being iterated over (-1, 1, or null)
+
+    
+  // playArea.forEach(function playCell() {
+  //   playCell === 1 ? playCell.style.background = 'red'
+  //   : playCell === -1 ? playCell.style.background = 'green'
+  //   : playCell === null ? playCell.style.background = 'blue'
+  //   : ''
+  // })
 
 
 
   // decide winner
-  if (isWinner === 1) {
-    renderXWin()
-  } else if (isWinner === -1) {
-    renderOWin()
-  } else if (isWinner === 'T') {
-    renderTie()
-  } else {
-    renderTurn()
-  }
+  (isWinner === 1 || isWinner === -1 || isWinner === 'T') ? renderEnd()
+  // No winner, turn advance
+  : renderTurn()
 
 }
 
 
-
+// Render helper functions
 function renderPlayer() {
-  console.log('hey')
+  
+}
+
+function renderEnd() {
+  isWinner === 1 ? renderXWin
+  : isWinner === -1 ? renderOWin
+  : isWinner === 'T' ? renderTie
+  : 'Someone won?'
 }
 
 function renderXWin() {
@@ -81,6 +116,10 @@ function renderXWin() {
 }
 
 function renderOWin() {
+
+}
+
+function renderTie() {
 
 }
 
@@ -97,6 +136,15 @@ function renderTurn() {
 }
 }
 
+// Event handler helper functions
+function handleClick(event) {
+  console.log(event.target.id)
+  render()
+}
+
+
+
+// Start the app
 init()
 
 /*------------------* User Stories *------------------*/
@@ -140,9 +188,9 @@ init()
 // X 3.2.4) render state variables, call a render function.
 
 // 3.3) render function should:
-	// 3.3.1) LOOP over board array, for each iteration:
-		// 3.3.1.1) index of the iteration to access the square in the squares array that corresponds with the current cell being iterated over in the board array
-		// 3.3.1.2) Style square dependant on the value inside current cell being iterated over (-1, 1, or null)
+	// ** 3.3.1) LOOP over board array, for each iteration:
+		// ** 3.3.1.1) index of the iteration to access the square in the squares array that corresponds with the current cell being iterated over in the board array
+		// ** 3.3.1.2) Style square dependant on the value inside current cell being iterated over (-1, 1, or null)
 	// 3.3.2) Render message on currrent game state:
 		// 3.3.2.1) If winner != null (game still in progress), render whose turn it is.
 			// Hint: Use ternary inside of a template literal
