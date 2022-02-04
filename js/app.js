@@ -12,7 +12,7 @@ const tie = "T"
 
 /*---------------------------- Variables (state) ----------------------------*/
 
-let isWinner, startingPlayer, playerTurn, turns
+let isWinner, startGame, startingPlayer, playerTurn, totalTurns
 
 
 /*------------------------ Cached Element References ------------------------*/
@@ -35,6 +35,7 @@ function init() {
     playArea[i].innerHTML = ""
   }
   //Resets the game to starting player
+  startGame = true
   startingPlayer = playerX
   playerTurn = startingPlayer
   //Resets win
@@ -84,12 +85,16 @@ function renderOWin() {
 }
 
 function renderTurn() {
+  if (startGame === true) {
+    startGame = false
+  } else {
   messageElement.textContent = `It's ${playerTurn === 1 ? 'X' : 'O'}'s turn, pick any avaliable tile!`
   if (playerTurn === 1) {
     playerTurn = -1
   } else if (playerTurn === -1) {
     playerTurn = 1
   }
+}
 }
 
 init()
