@@ -20,6 +20,17 @@ const players = [
   }
 ]
 
+// const winningCombo = [
+//   [0, 1, 2],
+//   [3, 4, 5],
+//   [6, 7, 8],
+//   [0, 3, 6],
+//   [1, 4, 7],
+//   [2, 5, 8],
+//   [0, 4, 8],
+//   [2, 4, 6]
+// ]
+
 const winningCombo = [
   [sq0, sq1, sq2],
   [sq3, sq4, sq5],
@@ -30,7 +41,6 @@ const winningCombo = [
   [sq0, sq4, sq8],
   [sq2, sq4, sq6]
 ]
-console.log(winningCombo)
 
 const playerX = 1
 const playerO = -1
@@ -39,7 +49,7 @@ const tie = "T"
 
 /*---------------------------- Variables (state) ----------------------------*/
 
-let isWinner, startGame, startingPlayer, playerTurn
+let isWinner, startGame, startingPlayer, playerTurn, grid
 
 
 /*------------------------ Cached Element References ------------------------*/
@@ -56,10 +66,12 @@ playArea.forEach(square => square.addEventListener('click', handleClick))
 
 function init() {
   //Clear the cells
-  let selectedCell = []
+  grid = [
+    null, null, null,
+    null, null, null, 
+    null, null, null
+  ]
   for(let i = 0; i < playArea.length; i++) {
-    // console.log(playArea[i])
-    selectedCell.push(null)
     playArea[i].innerHTML = ""
   }
   //Resets the game to starting player
@@ -77,25 +89,28 @@ function init() {
 
 function render() {
   // iterate 
-  	// ** 3.3.1) LOOP over board array, for each iteration:
-		// ** 3.3.1.1) index of the iteration to access the square in the squares array that corresponds with the current cell being iterated over in the board array
-		// ** 3.3.1.2) Style square dependant on the value inside current cell being iterated over (-1, 1, or null)
-
-    
-  // playArea.forEach(function playCell() {
-  //   playCell === 1 ? playCell.style.background = 'red'
-  //   : playCell === -1 ? playCell.style.background = 'green'
-  //   : playCell === null ? playCell.style.background = 'blue'
-  //   : ''
-  // })
-
+  grid.forEach((square, idx)  => {
+    if (square === 1) {
+      playArea[idx].textContent = 'X'
+      playArea[idx].style.background = 'red'
+    } else if (square === -1) {
+      playArea[idx].textContent = 'O'
+      playArea[idx].style.background = 'blue'
+    } else {
+      playArea[idx].innerHTML = ""
+    }
+  })
 
 
   // decide winner
-  (isWinner === 1 || isWinner === -1 || isWinner === 'T') ? renderEnd()
-  // No winner, turn advance
-  : renderTurn()
-
+  if (isWinner === 1 || isWinner === -1 || isWinner === 'T')   {
+    renderEnd()
+  } else {
+    // No winner, turn advance
+    renderTurn()
+  }
+  
+  
 }
 
 
@@ -105,22 +120,10 @@ function renderPlayer() {
 }
 
 function renderEnd() {
-  isWinner === 1 ? renderXWin
-  : isWinner === -1 ? renderOWin
-  : isWinner === 'T' ? renderTie
+  isWinner === 1 ? messageElement.textContent = `X is the winner!`
+  : isWinner === -1 ? messageElement.textContent = `O is the winner!`
+  : isWinner === 'T' ? messageElement.textContent = `All moves avalible used, the game is a tie!`
   : 'Someone won?'
-}
-
-function renderXWin() {
-
-}
-
-function renderOWin() {
-
-}
-
-function renderTie() {
-
 }
 
 function renderTurn() {
@@ -128,10 +131,8 @@ function renderTurn() {
     startGame = false
   } else {
   messageElement.textContent = `It's ${playerTurn === 1 ? 'X' : 'O'}'s turn, pick any avaliable tile!`
-  if (playerTurn === 1) {
-    playerTurn = -1
-  } else if (playerTurn === -1) {
-    playerTurn = 1
+  if (playerTurn === playerTurn) {
+    playerTurn *= -1
   }
 }
 }
@@ -139,6 +140,8 @@ function renderTurn() {
 // Event handler helper functions
 function handleClick(event) {
   console.log(event.target.id)
+  event.target.setAttribute('class', playerTurn)
+  event.target.grid = playerTurn
   render()
 }
 
@@ -188,30 +191,29 @@ init()
 // X 3.2.4) render state variables, call a render function.
 
 // 3.3) render function should:
-	// ** 3.3.1) LOOP over board array, for each iteration:
-		// ** 3.3.1.1) index of the iteration to access the square in the squares array that corresponds with the current cell being iterated over in the board array
-		// ** 3.3.1.2) Style square dependant on the value inside current cell being iterated over (-1, 1, or null)
-	// 3.3.2) Render message on currrent game state:
-		// 3.3.2.1) If winner != null (game still in progress), render whose turn it is.
-			// Hint: Use ternary inside of a template literal
-		// 3.3.2.2) If winner = 'T' (tie), render a tie message.
-		// 3.3.2.3) Else render a congratulatory message to which player has won.
-		// Hint (again): Use ternary inside a template literal 
+// X 3.3.1) LOOP over board array, for each iteration:
+	// X 3.3.1.1) index of the iteration to access the square in the squares array that corresponds with the current cell being iterated over in the board array
+// X 3.3.1.2) Style square dependant on the value inside current cell being iterated over (-1, 1, or null)
+// X 3.3.2) Render message on currrent game state:
+	// X 3.3.2.1) If winner != null (game still in progress), render whose turn it is.
+		// Hint: Use ternary inside of a template literal
+	// X 3.3.2.2) If winner = 'T' (tie), render a tie message.
+	// X 3.3.2.3) Else render a congratulatory message to which player has won.
+	// X Hint (again): Use ternary inside a template literal 
+// X 3.4) After completing this step, you should be able to manually change the values held in the board array in the initialization function and see the style of the corresponding square change on your page.
 
-// 3.4) After completing this step, you should be able to manually change the values held in the board array in the initialization function and see the style of the corresponding square change on your page.
+// X 4) Define the required constants:
 
-// 4) Define the required constants:
+// X 4.1) Define the 8 possible winning combinations as an array of arrays.
+  // X Each array will contain three indexes of the board that make a winner if they hold the same player value. 
+	// X If stuck: winningCombos array in the solution code. 
 
-	// 4.1) Define the 8 possible winning combinations as an array of arrays.
-	  // Each array will contain three indexes of the board that make a winner if they hold the same player value. 
-		// If stuck: winningCombos array in the solution code. 
-
-// 5) Wait for click on a square, call a handleClick function
+// ** 5) Wait for click on a square, call a handleClick function
   // handleClick function will...
-  // 5.1) Obtain the index of the square that was clicked by:
-	  // 5.1.1) "Extracting" the index from square id assigned 
-		// Hint: Each id corresponds with an index in our board array, 
-    //       how could these be used if we cleaned them up a bit?
+  // ** 5.1) Obtain the index of the square that was clicked by:
+	  // ** 5.1.1) "Extracting" the index from square id assigned 
+		// ** Hint: Each id corresponds with an index in our board array, 
+    // **      how could these be used if we cleaned them up a bit?
 
 // 5.2) If the board has a value at the index, return because that square is already taken.
 
