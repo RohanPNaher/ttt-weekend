@@ -20,16 +20,16 @@ const players = [
   }
 ]
 
-const winningCombo = {
-  'win1' : [sq0, sq1, sq2],
-  'win2' : [sq3, sq4, sq5],
-  'win3' : [sq6, sq7, sq8],
-  'win4' : [sq0, sq3, sq6],
-  'win5' : [sq1, sq4, sq7],
-  'win6' : [sq2, sq5, sq8],
-  'win7' : [sq0, sq4, sq8],
-  'win8' : [sq2, sq4, sq6]
-}
+const winningCombo = [
+  [sq0, sq1, sq2],
+  [sq3, sq4, sq5],
+  [sq6, sq7, sq8],
+  [sq0, sq3, sq6],
+  [sq1, sq4, sq7],
+  [sq2, sq5, sq8],
+  [sq0, sq4, sq8],
+  [sq2, sq4, sq6]
+]
 console.log(winningCombo)
 
 const playerX = 1
