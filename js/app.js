@@ -62,6 +62,7 @@ const replayBtn = document.getElementById('replay-button')
 /*----------------------------- Event Listeners -----------------------------*/
 //bubbling the squares
 board.addEventListener('click', handleClick)
+replayBtn.addEventListener('click', init)
 
 // ** 5) Wait for click on a square, call a handleClick function
   // handleClick function will...
@@ -93,7 +94,7 @@ function init() {
 
   // hide replay button
   replayBtn.setAttribute('hidden' , true)
-  
+
   //invoke render
   console.log('init invoked')
   render()
@@ -158,8 +159,10 @@ function handleClick(event) {
   console.log(event.target.id)
   console.log(event.target)
   if (event.target.classList.contains('1') || event.target.classList.contains('-1')) {
+    console.log("this is an old square")
     return render()
   }
+  console.log("this is a new square")
   event.target.setAttribute('class', `${playerTurn} play-area` )
   event.target.grid = playerTurn 
   render()
