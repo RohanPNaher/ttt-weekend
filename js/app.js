@@ -108,15 +108,12 @@ function render() {
     if (square === 1) {
       // square.id = playArea[idx]
       // console.log(square)
-      playArea[idx].id = idx
       playArea[idx].textContent = 'X'
       playArea[idx].style.background = 'red'
     } else if (square === -1) {
-      playArea[idx].id = idx
       playArea[idx].textContent = 'O'
       playArea[idx].style.background = 'blue'
     } else {
-      playArea[idx].id = idx
       playArea[idx].innerHTML = ""
       playArea[idx].style.background = 'green'
     }
@@ -158,29 +155,44 @@ function renderTurn() {
 }
 
 function getWinner(){
-  winningCombo.forEach(function(combo, idx){
-
+  let chickenDinner = []
+  let tempSum = 0;
+  winningCombo.forEach(function(combo){
+    let innerDinner = []
+    combo.forEach(function(idx){
+      if (grid[idx] === 1) {
+        tempSum += 1
+      } else if (grid[idx] === -1) {
+        tempSum -= 1
+      } else if (grid[idx] === null){
+        tempSum
+      }
+      console.log(tempSum)
+      innerDinner.push(tempSum)
+      tempSum = 0
+    })
+    chickenDinner.push(innerDinner.reduce((prev, current) => prev + current))
   })
-  console.log(winningCombo)
+  console.log(chickenDinner)
 }
 
 // 5.6) Set the winner variable if there's a winner by calling a new function: getWinner.
 	// The getWinner function will...
 
-	// 5.6.1) Methods to find out if there is a winner
-	// 1. (more elegant) way uses winningCombos array (see: step 4)
-	// 2. (simpler; more code) use winningCombos as a reference
-  // Choose between 1 or 2
+//	// 5.6.1) Methods to find out if there is a winner
+//	// 1. (more elegant) way uses winningCombos array (see: step 4)
+//	// 2. (simpler; more code) use winningCombos as a reference
+////  // Choose between 1 or 2
     
-	// 5.6.1.1) Loop through the each of the winning combination arrays defined.
-	// 5.6.1.2) Total up the three board positions using the three indexes in the current combo.
+//	// 5.6.1.1) Loop through the each of the winning combination arrays defined.
+//	// 5.6.1.2) Total up the three board positions using the three indexes in the current combo.
 	// 5.6.1.3) Convert the total to an absolute value (convert any negative total to positive).
 	// 5.6.1.4) If the total equals 3, we have a winner! Set the winner variable to the board's value at the index specified by the first index of that winning combination's array by returning that value.
 
 
 // Event handler helper functions
 function handleClick(event) {
-  let squareIndex = parseInt(event.target.id)
+  let squareIndex = parseInt(event.target.id.slice(2))
 
   //If the player somehow clicks outside the board array
   if (event.target.classList.contains('board')) {
