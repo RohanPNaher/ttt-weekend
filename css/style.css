@@ -1,5 +1,4 @@
 body {
-    background-color: gray;
 	/* Use a system font, if none are available use an available sans-sarif   font */
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 		Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -30,8 +29,12 @@ div {
   vertical-align: middle;
 }
 
+section#replay-container {
+  padding: 20px;
+}
+
 img {
-  height: 8vmin;
+  height: 7vmin;
 }
 
 #sq1, #sq2, #sq4, #sq5, #sq7, #sq8 {
@@ -48,4 +51,8 @@ img {
 
 #sq0, #sq1, #sq2, #sq3, #sq4, #sq5 {
   border-bottom: 3px solid black;
+}
+
+.hidden {
+  display: none;
 }

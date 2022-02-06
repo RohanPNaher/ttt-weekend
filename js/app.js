@@ -50,8 +50,9 @@ function init() {
   messageElement.textContent = `${startingPlayer === 1 ? 'X' : 'O'} goes first, pick any tile.`
 
   // hide replay button
-  replayBtn.setAttribute('hidden' , true)
+  replayBtn.setAttribute('class', `btn btn-primary hidden`)
 
+  confetti.stop()
   //invoke render
   render()
 }
@@ -82,11 +83,12 @@ function render() {
 /*---------------------------- Render Functions -----------------------------*/
 
 function renderEnd() {
-  isWinner === 1 ? messageElement.textContent = `X is the winner!`
+  isWinner === 1 ? 
+  messageElement.textContent = `X is the winner!`
   : isWinner === -1 ? messageElement.textContent = `O is the winner!`
   : isWinner === 'T' ? messageElement.textContent = `There are no more unclaimed tiles, so the game is a tie!`
   : 'Someone won?'
-  replayBtn.removeAttribute('hidden')
+  replayBtn.setAttribute('class', `btn btn-primary`)
 }
 
 function renderTurn() {
@@ -123,10 +125,10 @@ function getWinner(){
   // Win
   if (chickenDinner.includes(3)) {
     //Highlights the winning tiles
+    confetti.start(2000)
     let comboIndex = chickenDinner.indexOf(3)
     winningCombo[comboIndex].forEach(function(idx) {
       playArea[idx].innerHTML = '<img src="./images/parrot.gif">'
-      playArea[idx].style.background = 'yellow'
     })
     // Due to playerTurn swithcing before render is called, it must be switched back to call the correct winner
     return isWinner = (playerTurn * -1)
