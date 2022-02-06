@@ -20,27 +20,27 @@ const players = [
   }
 ]
 
-// const winningCombo = [
-//   [0, 1, 2],
-//   [3, 4, 5],
-//   [6, 7, 8],
-//   [0, 3, 6],
-//   [1, 4, 7],
-//   [2, 5, 8],
-//   [0, 4, 8],
-//   [2, 4, 6]
-// ]
-
 const winningCombo = [
-  [sq0, sq1, sq2],
-  [sq3, sq4, sq5],
-  [sq6, sq7, sq8],
-  [sq0, sq3, sq6],
-  [sq1, sq4, sq7],
-  [sq2, sq5, sq8],
-  [sq0, sq4, sq8],
-  [sq2, sq4, sq6]
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6]
 ]
+
+// const winningCombo = [
+//   [sq0, sq1, sq2],
+//   [sq3, sq4, sq5],
+//   [sq6, sq7, sq8],
+//   [sq0, sq3, sq6],
+//   [sq1, sq4, sq7],
+//   [sq2, sq5, sq8],
+//   [sq0, sq4, sq8],
+//   [sq2, sq4, sq6]
+// ]
 
 const playerX = 1
 const playerO = -1
@@ -141,8 +141,8 @@ function renderPlayer() {
 }
 
 function renderEnd() {
-  isWinner === 1 ? messageElement.textContent = `X is the winner!`
-  : isWinner === -1 ? messageElement.textContent = `O is the winner!`
+  isWinner === 1 ? messageElement.textContent = `${playerX} is the winner!`
+  : isWinner === -1 ? messageElement.textContent = `${playerO} is the winner!`
   : isWinner === 'T' ? messageElement.textContent = `All moves avalible used, the game is a tie!`
   : 'Someone won?'
   replayBtn.removeAttribute('hidden')
@@ -157,12 +157,35 @@ function renderTurn() {
 }
 }
 
+function getWinner(){
+  winningCombo.forEach(function(combo, idx){
+
+  })
+  console.log(winningCombo)
+}
+
+// 5.6) Set the winner variable if there's a winner by calling a new function: getWinner.
+	// The getWinner function will...
+
+	// 5.6.1) Methods to find out if there is a winner
+	// 1. (more elegant) way uses winningCombos array (see: step 4)
+	// 2. (simpler; more code) use winningCombos as a reference
+  // Choose between 1 or 2
+    
+	// 5.6.1.1) Loop through the each of the winning combination arrays defined.
+	// 5.6.1.2) Total up the three board positions using the three indexes in the current combo.
+	// 5.6.1.3) Convert the total to an absolute value (convert any negative total to positive).
+	// 5.6.1.4) If the total equals 3, we have a winner! Set the winner variable to the board's value at the index specified by the first index of that winning combination's array by returning that value.
+
+
 // Event handler helper functions
 function handleClick(event) {
   let squareIndex = parseInt(event.target.id)
-  console.log(event.target.id)
-  console.log(grid[event])
-  console.log(event.target)
+
+  //If the player somehow clicks outside the board array
+  if (event.target.classList.contains('board')) {
+    return
+  }
 
   //If square is occupied, does not change game state
   if (event.target.classList.contains('1') || event.target.classList.contains('-1')) {
@@ -172,6 +195,7 @@ function handleClick(event) {
 
   //If there is a winner, stop rendering new state
   if(isWinner !== null){
+    console.log('Somebody won or not!')
     return
   }
   console.log("this is a new square")
@@ -188,12 +212,6 @@ function handleClick(event) {
   render()
 }
 
-// ** 5) Wait for click on a square, call a handleClick function
-  // handleClick function will...
-  // ** 5.1) Obtain the index of the square that was clicked by:
-	  // ** 5.1.1) "Extracting" the index from square id assigned 
-		// ** Hint: Each id corresponds with an index in our board array, 
-    // **      how could these be used if we cleaned them up a bit?
 
 
 // Start the app
