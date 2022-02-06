@@ -61,9 +61,9 @@ function render() {
   // Connect the grid values to the html board
   grid.forEach((square, idx)  => {
     if (square === 1) {
-      playArea[idx].innerHTML = '<img src="./images/black-cross.png">'
+      playArea[idx].innerHTML = `<img src="./images/black-cross.png" class="x">`
     } else if (square === -1) {
-      playArea[idx].innerHTML = '<img src="./images/red-circle.png">'
+      playArea[idx].innerHTML = `<img src="./images/red-circle.png" class="o">`
     } else {
       playArea[idx].innerHTML = ""
       playArea[idx].style.background = ''
@@ -182,15 +182,5 @@ function handleClick(event) {
 
 // Start the app
 init()
-
-/*------------------* User Stories *------------------*/
-// //AAU, I should see a tic tac toe board open on the page
-//// AAU, I should be given directions to start the game
-//// AAU, I should be able to select a square and put an X (or an O)
-//// AAU, I should not be able to change a square's value
-//// AAU, I should be able to complete the game
-// AAU, I should be made to feel like a winner, if I am the winner goddamnit
-//// AAU, I should be told the game ends in a tie
-//// AAU, I should be given the chance to play again
 
 

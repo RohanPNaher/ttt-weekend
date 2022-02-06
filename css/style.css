@@ -5,11 +5,19 @@ body {
 	margin: 0;
   height: 100vh;
   display: flex;
-  flex-direction: column;    
-  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
     
+}
+
+h1 {
+  font-size: 5em;
+}
+
+h2 {
+  font-size: 3em;
+  margin-bottom: 5vh;
 }
 
 section.board {
@@ -30,6 +38,7 @@ div {
 }
 
 section#replay-container {
+  display: flex;
   padding: 20px;
 }
 
