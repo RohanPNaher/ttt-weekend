@@ -82,6 +82,7 @@ function init() {
   ]
   for(let i = 0; i < playArea.length; i++) {
     playArea[i].innerHTML = ""
+    playArea[i].setAttribute('class', 'play-area')
   }
   //Resets the game to starting player
   startGame = true
@@ -105,17 +106,22 @@ function render() {
   // iterate 
   grid.forEach((square, idx)  => {
     if (square === 1) {
+      // square.id = playArea[idx]
+      // console.log(square)
+      playArea[idx].id = idx
       playArea[idx].textContent = 'X'
       playArea[idx].style.background = 'red'
     } else if (square === -1) {
+      playArea[idx].id = idx
       playArea[idx].textContent = 'O'
       playArea[idx].style.background = 'blue'
     } else {
+      playArea[idx].id = idx
       playArea[idx].innerHTML = ""
       playArea[idx].style.background = 'green'
     }
   })
-
+  
 
   // decide winner
   if (isWinner === 1 || isWinner === -1 || isWinner === 'T')   {
@@ -148,23 +154,37 @@ function renderTurn() {
     startGame = false
   } else {
   messageElement.textContent = `It's ${playerTurn === 1 ? 'X' : 'O'}'s turn, pick any avaliable tile!`
-  if (playerTurn === playerTurn) {
-    playerTurn *= -1
-  }
 }
 }
 
 // Event handler helper functions
 function handleClick(event) {
+  let squareIndex = parseInt(event.target.id)
   console.log(event.target.id)
+  console.log(grid[event])
   console.log(event.target)
+
+  //If square is occupied, does not change game state
   if (event.target.classList.contains('1') || event.target.classList.contains('-1')) {
     console.log("this is an old square")
-    return render()
+    return 
+  }
+
+  //If there is a winner, stop rendering new state
+  if(isWinner !== null){
+    return
   }
   console.log("this is a new square")
   event.target.setAttribute('class', `${playerTurn} play-area` )
-  event.target.grid = playerTurn 
+
+  //change the grid to either X or O based on whose turn it is
+  grid[squareIndex] = playerTurn
+
+  //change the turn
+  if (playerTurn === playerTurn) {
+    playerTurn *= -1
+  }
+
   render()
 }
 
@@ -239,18 +259,18 @@ init()
 
 // ** 5) Wait for click on a square, call a handleClick function
   // handleClick function will...
-  // ** 5.1) Obtain the index of the square that was clicked by:
-	  // ** 5.1.1) "Extracting" the index from square id assigned 
-		// ** Hint: Each id corresponds with an index in our board array, 
-    // **      how could these be used if we cleaned them up a bit?
+  // // ** 5.1) Obtain the index of the square that was clicked by:
+	  // // ** 5.1.1) "Extracting" the index from square id assigned 
+//		// ** Hint: Each id corresponds with an index in our board array, 
+ //   // **      how could these be used if we cleaned them up a bit?
 
-// 5.2) If the board has a value at the index, return because that square is already taken.
+// // 5.2) If the board has a value at the index, return because that square is already taken.
 
-// 5.3) If winner is not null, immediately return because the game is over.
+// // 5.3) If winner is not null, immediately return because the game is over.
 
-// 5.4) Update the board array at the index with the value of turn.
+// // 5.4) Update the board array at the index with the value of turn.
 
-// 5.5) Change the turn by multiplying turn by -1 (this flips a 1 to -1, and vice-versa).
+// // 5.5) Change the turn by multiplying turn by -1 (this flips a 1 to -1, and vice-versa).
 
 // 5.6) Set the winner variable if there's a winner by calling a new function: getWinner.
 	// The getWinner function will...
