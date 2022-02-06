@@ -121,6 +121,7 @@ function render() {
   
 
   // decide winner
+  getWinner()
   if (isWinner === 1 || isWinner === -1 || isWinner === 'T')   {
     renderEnd()
   } else {
@@ -138,8 +139,8 @@ function renderPlayer() {
 }
 
 function renderEnd() {
-  isWinner === 1 ? messageElement.textContent = `${playerX} is the winner!`
-  : isWinner === -1 ? messageElement.textContent = `${playerO} is the winner!`
+  isWinner === 1 ? messageElement.textContent = `X is the winner!`
+  : isWinner === -1 ? messageElement.textContent = `O is the winner!`
   : isWinner === 'T' ? messageElement.textContent = `All moves avalible used, the game is a tie!`
   : 'Someone won?'
   replayBtn.removeAttribute('hidden')
@@ -156,8 +157,10 @@ function renderTurn() {
 
 function getWinner(){
   let chickenDinner = []
+  //determine the value of the array for the Xs and Os in combo
   let tempSum = 0;
   winningCombo.forEach(function(combo){
+    //initialize empty array to signify the value of each cell in a combo, to reduce later
     let innerDinner = []
     combo.forEach(function(idx){
       if (grid[idx] === 1) {
@@ -168,12 +171,21 @@ function getWinner(){
         tempSum
       }
       console.log(tempSum)
+
+      // Add value 
       innerDinner.push(tempSum)
       tempSum = 0
     })
-    chickenDinner.push(innerDinner.reduce((prev, current) => prev + current))
+    chickenDinner.push(Math.abs(innerDinner.reduce((prev, current) => prev + current)))
   })
   console.log(chickenDinner)
+  if (chickenDinner.includes(3)) {
+    return isWinner = playerTurn
+  } else if (grid.includes(null) !== true) {
+    return isWinner = 'T'
+  } else {
+    return isWinner = null
+  }
 }
 
 // 5.6) Set the winner variable if there's a winner by calling a new function: getWinner.
@@ -199,16 +211,16 @@ function handleClick(event) {
     return
   }
 
-  //If square is occupied, does not change game state
-  if (event.target.classList.contains('1') || event.target.classList.contains('-1')) {
-    console.log("this is an old square")
-    return 
-  }
-
   //If there is a winner, stop rendering new state
   if(isWinner !== null){
     console.log('Somebody won or not!')
     return
+  }
+  
+  //If square is occupied, does not change game state
+  if (event.target.classList.contains('1') || event.target.classList.contains('-1')) {
+    console.log("this is an old square")
+    return 
   }
   console.log("this is a new square")
   event.target.setAttribute('class', `${playerTurn} play-area` )
@@ -216,12 +228,14 @@ function handleClick(event) {
   //change the grid to either X or O based on whose turn it is
   grid[squareIndex] = playerTurn
 
+  render()
+
   //change the turn
   if (playerTurn === playerTurn) {
     playerTurn *= -1
   }
 
-  render()
+  
 }
 
 
