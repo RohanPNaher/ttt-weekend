@@ -30,6 +30,10 @@ div {
   vertical-align: middle;
 }
 
+img {
+  height: 8vmin;
+}
+
 #sq1, #sq2, #sq4, #sq5, #sq7, #sq8 {
   border-left: 3px solid black;
 }

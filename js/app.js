@@ -60,14 +60,12 @@ function render() {
   // Connect the grid values to the html board
   grid.forEach((square, idx)  => {
     if (square === 1) {
-      playArea[idx].textContent = 'X'
-      playArea[idx].style.background = 'red'
+      playArea[idx].innerHTML = '<img src="./images/black-cross.png">'
     } else if (square === -1) {
-      playArea[idx].textContent = 'O'
-      playArea[idx].style.background = 'blue'
+      playArea[idx].innerHTML = '<img src="./images/red-circle.png">'
     } else {
       playArea[idx].innerHTML = ""
-      playArea[idx].style.background = 'green'
+      playArea[idx].style.background = ''
     }
   })
 
@@ -127,6 +125,7 @@ function getWinner(){
     //Highlights the winning tiles
     let comboIndex = chickenDinner.indexOf(3)
     winningCombo[comboIndex].forEach(function(idx) {
+      playArea[idx].innerHTML = '<img src="./images/parrot.gif">'
       playArea[idx].style.background = 'yellow'
     })
     // Due to playerTurn swithcing before render is called, it must be switched back to call the correct winner
@@ -153,12 +152,16 @@ function handleClick(event) {
   }
   
   // If square is occupied, does not change game state
-  if (event.target.classList.contains('1') || event.target.classList.contains('-1')) {
+  if (event.target.classList.contains('x') || event.target.classList.contains('o')) {
     return 
   }
   
   // Add class for styling
-  event.target.setAttribute('class', `${playerTurn} play-area` )
+  if (playerTurn === 1) {
+    event.target.setAttribute('class', `x play-area` )
+  } else if (playerTurn === -1) {
+    event.target.setAttribute('class', `o play-area` )
+  }
 
   // Change the grid to correspond to either X or O based on whose turn it is
   grid[squareIndex] = playerTurn
