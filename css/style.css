@@ -21,8 +21,27 @@ section.board {
 }
 
 div {
-  border: 3px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 3px solid black; */
   font-size: 8vmin;
   text-align: center;
   vertical-align: middle;
+}
+
+#sq1, #sq2, #sq4, #sq5, #sq7, #sq8 {
+  border-left: 3px solid black;
+}
+
+#sq0, #sq1, #sq3, #sq4, #sq6, #sq7 {
+  border-right: 3px solid black;
+}
+
+#sq3, #sq4, #sq5, #sq6, #sq7, #sq8 {
+  border-top: 3px solid black;
+}
+
+#sq0, #sq1, #sq2, #sq3, #sq4, #sq5 {
+  border-bottom: 3px solid black;
 }
