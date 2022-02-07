@@ -47,7 +47,7 @@ function init() {
   //Resets win
   isWinner = null
   //Resets the turn/win message
-  messageElement.textContent = `${startingPlayer === 1 ? 'X' : 'O'} goes first, pick any tile.`
+  messageElement.textContent = `${startingPlayer === 1 ? 'X' : 'O'} goes first. Pick any tile.`
 
   // hide replay button
   replayBtn.setAttribute('class', `btn btn-primary hidden`)
@@ -95,7 +95,7 @@ function renderTurn() {
   if (startGame === true) {
     startGame = false
   } else {
-  messageElement.textContent = `It's ${playerTurn === 1 ? 'X' : 'O'}'s turn, pick any avaliable tile.`
+  messageElement.textContent = `It's ${playerTurn === 1 ? 'X' : 'O'}'s turn. Pick any avaliable tile.`
 }
 }
 
