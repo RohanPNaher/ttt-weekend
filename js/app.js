@@ -124,10 +124,15 @@ function getWinner(){
 
   // Win
   if (chickenDinner.includes(3)) {
-    //Highlights the winning tiles
+    // Highlights the winning tiles
     confetti.start(2000)
     let comboIndex = chickenDinner.indexOf(3)
     winningCombo[comboIndex].forEach(function(idx) {
+      playArea[idx].innerHTML = '<img src="./images/parrot.gif">'
+    })
+    // If the player somehow gets 2 rows 
+    let secondIndex = chickenDinner.lastIndexOf(3)
+    winningCombo[secondIndex].forEach(function(idx) {
       playArea[idx].innerHTML = '<img src="./images/parrot.gif">'
     })
     // Due to playerTurn swithcing before render is called, it must be switched back to call the correct winner
